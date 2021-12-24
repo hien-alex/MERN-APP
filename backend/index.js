@@ -3,6 +3,7 @@ import app from "./server.js";
 import dotenv from "dotenv";
 import mongodb from "mongodb";
 import { exit } from "process";
+import RestaurantsDAO from "./api/DAO/restaurantsDAO.js";
 
 dotenv.config();
 const MongoClient = mongodb.MongoClient;
@@ -19,6 +20,7 @@ MongoClient.connect(process.env.ATLAS_URI, {
     exit(1);
   })
   .then(async (client) => {
+    await RestaurantsDAO.injectDB(client);
     app.listen(port, () => {
       console.log(`MongoDB connection established on port ${port}.`);
     });
