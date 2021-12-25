@@ -1,4 +1,3 @@
-import mongodb from "mongodb";
 let restaurants;
 
 export default class RestaurantsDAO {
