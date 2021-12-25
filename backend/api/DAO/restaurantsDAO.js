@@ -17,22 +17,58 @@ export default class RestaurantsDAO {
     }
   }
 
-  static async getRestaurants() {
+  static async getRestaurants({
+    filter = null,
+    page = 0,
+    restaurantsPerPage = 20,
+  } = {}) {
+    let query;
+    if (filter) {
+      if ("name" in filter) {
+        query = { $text: { $search: filter["name"] } };
+      } else if ("cuisine" in filter) {
+        query = { cuisine: { $eq: filter["cuisine"] } };
+      } else if ("zipcode" in filter) {
+        query = { "address.zipcode": { $eq: filter["zipcode"] } };
+      }
+    }
+
     let cursor;
     try {
-      cursor = await restaurants.find({}, { projection: { name: 1, _id: 0 } });
+      cursor = await restaurants.find(query);
     } catch (e) {
-      console.error(`Unable to find: ${e}`);
+      console.error(`Unable to find ${e}.`);
       return { restaurantsList: [], totalNumRestaurants: 0 };
     }
 
-    const displayCursor = cursor.limit(10);
+    const displayCursor = cursor
+      .limit(restaurantsPerPage)
+      .skip(restaurantsPerPage * page);
 
     try {
       const restaurantsList = await displayCursor.toArray();
-      return { restaurantsList };
+      const totalNumRestaurants = await restaurants.countDocuments(query);
+      return { restaurantsList, totalNumRestaurants };
     } catch (e) {
-      console.log(`Unable convert curosr to array, ${e}`);
+      console.error(`Unable to conver cursor to array!`);
+      return { restaurantsList: [], totalNumRestaurants: 0 };
     }
+
+    // let cursor;
+    // try {
+    //   cursor = await restaurants.find({}, { projection: { name: 1, _id: 0 } });
+    // } catch (e) {
+    //   console.error(`Unable to find: ${e}`);
+    //   return { restaurantsList: [], totalNumRestaurants: 0 };
+    // }
+
+    // const displayCursor = cursor.limit(10);
+
+    // try {
+    //   const restaurantsList = await displayCursor.toArray();
+    //   return { restaurantsList };
+    // } catch (e) {
+    //   console.log(`Unable convert curosr to array, ${e}`);
+    // }
   }
 }
