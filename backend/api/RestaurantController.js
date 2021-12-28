@@ -29,13 +29,14 @@ export default class RestaurantsController {
     };
 
     res.json(response);
+  }
 
-    // try {
-    //   let restaurants = await RestaurantsDAO.getRestaurants();
-    //   res.json(restaurants);
-    // } catch (e) {
-    //   console.log(`api ${e}`);
-    //   res.status(500).json({ error: e });
-    // }
+  static async apiGetCuisines(req, res) {
+    try {
+      let cuisinesResponse = await RestaurantsDAO.getCuisines();
+      res.json(cuisinesResponse);
+    } catch (e) {
+      res.status(500).json({ error: e });
+    }
   }
 }

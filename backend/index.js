@@ -12,7 +12,7 @@ const port = process.env.PORT || 5000;
 
 MongoClient.connect(process.env.ATLAS_URI, {
   maxPoolSize: 50,
-  wtimeout: 2500,
+  wtimeoutMS: 2500,
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

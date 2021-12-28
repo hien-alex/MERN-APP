@@ -52,7 +52,6 @@ export default class RestaurantsDAO {
       console.error(`Unable to conver cursor to array!`);
       return { restaurantsList: [], totalNumRestaurants: 0 };
     }
-
     // let cursor;
     // try {
     //   cursor = await restaurants.find({}, { projection: { name: 1, _id: 0 } });
@@ -69,5 +68,15 @@ export default class RestaurantsDAO {
     // } catch (e) {
     //   console.log(`Unable convert curosr to array, ${e}`);
     // }
+  }
+  static async getCuisines() {
+    let cuisines;
+    try {
+      cuisines = await restaurants.distinct("cuisine");
+      return cuisines;
+    } catch (e) {
+      console.error(`Unable to get cuisines: ${e}`);
+      return { error: e };
+    }
   }
 }
