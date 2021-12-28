@@ -79,4 +79,23 @@ export default class RestaurantsDAO {
       return { error: e };
     }
   }
+
+  static async getRestaurantsById(id) {
+    let restaurant;
+    try {
+      restaurant = await restaurants.find({ restaurant_id: { $eq: id } });
+      console.log(restaurant);
+    } catch (e) {
+      console.error(`Unable to get restaurnt with id:${id}`);
+      return { error: e };
+    }
+
+    try {
+      restaurant = await restaurant.toArray();
+      return restaurant;
+    } catch (e) {
+      console.error(`Cannot convert restaurant to array: ${e}`);
+      return { restaurant: "" };
+    }
+  }
 }
