@@ -21,7 +21,7 @@ function App() {
     <div>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#" style={{ marginLeft: "2vw" }}>
-          Navbar
+          MERN Restaurants Project
         </a>
         <button
           class="navbar-toggler"
@@ -35,49 +35,7 @@ function App() {
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">
-                Home <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                Features
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                Pricing
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown link
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a class="dropdown-item" href="#">
-                  Action
-                </a>
-                <a class="dropdown-item" href="#">
-                  Another action
-                </a>
-                <a class="dropdown-item" href="#">
-                  Something else here
-                </a>
-              </div>
-            </li>
-          </ul>
+          <ul class="navbar-nav"></ul>
         </div>
       </nav>
       <div className="container mt-3">
@@ -89,11 +47,11 @@ function App() {
           />
           <Route
             path="/restaurants/:id/review"
-            render={(props) => <AddReview {...props} user={user} />}
+            element={(props) => <AddReview {...props} user={user} />}
           />
           <Route
             path="/restaurants/:id"
-            render={(props) => <Restaurants {...props} user={user} />}
+            element={(props) => <Restaurants {...props} user={user} />}
           />
           <Route path="/login" element={<Login login={login} />} />
         </Routes>

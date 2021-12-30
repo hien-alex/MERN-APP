@@ -31,7 +31,7 @@ const RestaurantsList = (props) => {
   };
 
   const refreshList = () => {
-    setRestaurants([]);
+    retrieveRestaurants();
   };
 
   const find = (query, by) => {
@@ -45,17 +45,17 @@ const RestaurantsList = (props) => {
       });
   };
 
-  const findName = () => {
+  const findByName = () => {
     find(searchName, "name");
   };
 
-  const findZip = () => {
+  const findByZip = () => {
     find(searchZip, "zipcode");
   };
 
   const findByCuisine = () => {
-    if (setSearchCuisine == "All Cuisines") {
-      retrieveRestaurants();
+    if (searchCuisine === "All Cuisines") {
+      refreshList();
     } else {
       find(searchCuisine, "cuisine");
     }
@@ -83,7 +83,103 @@ const RestaurantsList = (props) => {
       });
   };
 
-  return <div className="restaurants-list">Hello WORLD</div>;
+  return (
+    <div>
+      <div className="row pb-1">
+        <div className="input-group col-sm">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by Name"
+            value={searchName}
+            onChange={onChangeSearchName}
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={findByName}
+            >
+              Search
+            </button>
+          </div>
+        </div>
+        <div className="input-group col-sm">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by Zipcode"
+            value={searchZip}
+            onChange={onChangeSearchZip}
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={findByZip}
+            >
+              Search
+            </button>
+          </div>
+        </div>
+        <div className="input-group col-sm">
+          <select className="form-control" onChange={onChangeSearchCuisine}>
+            {cuisines.map((cuisine) => {
+              return (
+                <option value={cuisine}>{cuisine.substring(0, 20)}</option>
+              );
+            })}
+          </select>
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={findByCuisine}
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div className="row">
+        {restaurants.map((restaurant) => {
+          const address = `${restaurant.address.building} ${restaurant.address.street}, ${restaurant.address.zipcode}`;
+          return (
+            <div className="col-lg-4 pb-1">
+              <div className="card" style={{ height: "100%" }}>
+                <div className="card-body">
+                  <h5 className="card-title">{restaurant.name}</h5>
+                  <p className="card-text">
+                    <strong>Cuisine: </strong>
+                    {restaurant.cuisine}
+                    <br />
+                    <strong>Address: </strong>
+                    {address}
+                  </p>
+                  <div className="row">
+                    <Link
+                      to={"/restaurants/" + restaurant._id}
+                      className="btn btn-primary col-lg-5 mx-1 mb-1"
+                    >
+                      View Reviews
+                    </Link>
+                    <a
+                      target="_blank"
+                      href={"https://www.google.com/maps/place/" + address}
+                      className="btn btn-primary col-lg-5 mx-1 mb-1"
+                    >
+                      View Map
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
 export default RestaurantsList;
