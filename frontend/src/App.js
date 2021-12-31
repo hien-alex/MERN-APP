@@ -45,6 +45,7 @@ function App() {
             path={("/", "/restaurants")}
             element={<RestaurantsList />}
           />
+          <Route exact path={"/"} element={<RestaurantsList />} />
           <Route
             path="/restaurants/:id/review"
             element={(props) => <AddReview {...props} user={user} />}

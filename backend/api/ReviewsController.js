@@ -62,4 +62,17 @@ export default class ReviewsController {
       res.status(500).json({ error: e.message });
     }
   }
+
+  static async apiGetReviewsByRestaurantID(req, res) {
+    try {
+      let restaurantID = req.params.id;
+      const restaurantReviews = await reviewsDAO.getReviewsOfRestaurant(
+        restaurantID
+      );
+
+      res.json(restaurantReviews);
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  }
 }

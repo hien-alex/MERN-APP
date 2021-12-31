@@ -61,4 +61,28 @@ export default class reviewsDAO {
       return { error: e };
     }
   }
+
+  static async getReviewsOfRestaurant(restaurantID) {
+    let reviewsFound;
+    restaurantID = parseInt(restaurantID);
+    try {
+      reviewsFound = await reviews.find({
+        restaurant_id: { $eq: restaurantID },
+      });
+      console.log(reviewsFound);
+    } catch (e) {
+      console.error(
+        `Unable to get reviews with restaurant id: ${restaurantID}`
+      );
+      return { error: e };
+    }
+
+    try {
+      reviewsFound = await reviewsFound.toArray();
+      return reviewsFound;
+    } catch (e) {
+      console.error(`Cannot convert restaurant to array: ${e}`);
+      return { reviewsFound: "" };
+    }
+  }
 }
