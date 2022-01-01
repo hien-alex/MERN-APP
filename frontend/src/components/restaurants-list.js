@@ -159,7 +159,7 @@ const RestaurantsList = (props) => {
                   </p>
                   <div className="row">
                     <Link
-                      to={"/restaurants/" + restaurant._id}
+                      to={"/review/id/" + restaurant._id}
                       className="btn btn-primary col-lg-5 mx-1 mb-1"
                     >
                       View Reviews

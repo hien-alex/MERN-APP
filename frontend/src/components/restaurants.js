@@ -9,9 +9,21 @@ const Restaurants = (props) => {
     name: "",
     address: {},
     cuisine: "",
-    reviews: [],
   };
+
   const [restaurant, setRestaurant] = useState(initialRestaurantState);
+  const [reviews, setReviews] = useState([]);
+
+  const getReviews = (id) => {
+    RestaurantDataService.getReviews(id)
+      .then((response) => {
+        setReviews(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const getRestaurant = (id) => {
     RestaurantDataService.get(id)
@@ -24,7 +36,67 @@ const Restaurants = (props) => {
       });
   };
 
-  return <div className="App">Hello World.</div>;
+  const deleteReview = (id) => {
+    RestaurantDataService.deleteReview(id)
+      .then((response) => {
+        console.log("Success!");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  return (
+    <div>
+      {restaurant ? (
+        <div>
+          <h5>{restaurant.name}</h5>
+          <p>
+            <strong>Cuisine: </strong> {restaurant.cuisine}
+            <br />
+            <strong>Address: </strong> {restaurant.address.building}{" "}
+            {restaurant.address.street}, {restaurant.address.zipcode}
+          </p>
+          <Link to={"/"} className="btn btn-primary">
+            Add Review
+          </Link>
+          <h4> Reviews </h4>
+          <div className="row">
+            {reviews.length > 0 ? (
+              reviews.map((review, index) => {
+                return (
+                  <div className="col-lg-4 pb-1" key={index}>
+                    <div className="card">
+                      <div className="card-body">
+                        <p className="card-text">
+                          {review.text}
+                          <br />
+                          <strong>User: </strong> {review.name}
+                          <br />
+                          <strong>Date: </strong> {review.date}
+                        </p>
+                        <div className="row">
+                          <button onClick={deleteReview(review._id)}>
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="col-sm-4">
+                <p>No reviews yet.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div>No restaurant selected.</div>
+      )}
+    </div>
+  );
 };
 
 export default Restaurants;

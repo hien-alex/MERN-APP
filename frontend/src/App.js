@@ -19,8 +19,8 @@ function App() {
 
   return (
     <div>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#" style={{ marginLeft: "2vw" }}>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a className="navbar-brand" href="#" style={{ marginLeft: "2vw" }}>
           MERN Restaurants Project
         </a>
         <button
@@ -40,19 +40,12 @@ function App() {
       </nav>
       <div className="container mt-3">
         <Routes>
-          <Route
-            exact
-            path={("/", "/restaurants")}
-            element={<RestaurantsList />}
-          />
+          <Route path="/review/id/:id" element={<Restaurants />} />
+          <Route exact path={"/restaurants"} element={<RestaurantsList />} />
           <Route exact path={"/"} element={<RestaurantsList />} />
           <Route
             path="/restaurants/:id/review"
             element={(props) => <AddReview {...props} user={user} />}
-          />
-          <Route
-            path="/restaurants/:id"
-            element={(props) => <Restaurants {...props} user={user} />}
           />
           <Route path="/login" element={<Login login={login} />} />
         </Routes>
