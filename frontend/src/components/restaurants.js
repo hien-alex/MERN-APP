@@ -14,8 +14,13 @@ const Restaurants = (props) => {
   const [restaurant, setRestaurant] = useState(initialRestaurantState);
   const [reviews, setReviews] = useState([]);
 
+  useEffect(() => {
+    getReviews();
+  }, []);
+
   const getReviews = (id) => {
-    RestaurantDataService.getReviews(id)
+    console.log(id);
+    RestaurantDataService.getReviews(parseInt(40361606))
       .then((response) => {
         setReviews(response.data);
         console.log(response.data);

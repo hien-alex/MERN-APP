@@ -30,7 +30,7 @@ class RestaurantDataService {
   }
 
   getReviews(id) {
-    return http.get(`/review/id${id}`);
+    return http.get(`/review/id/${id}`);
   }
 }
 
