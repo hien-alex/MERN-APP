@@ -22,6 +22,7 @@ class RestaurantDataService {
   }
 
   deleteReview(id) {
+    console.log(id);
     return http.delete(`/review?id=${id}`);
   }
 

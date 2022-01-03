@@ -37,7 +37,7 @@ const RestaurantsList = (props) => {
   const find = (query, by) => {
     RestaurantDataService.find(query, by)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setRestaurants(response.data.restaurants);
       })
       .catch((e) => {
@@ -64,7 +64,7 @@ const RestaurantsList = (props) => {
   const retrieveRestaurants = () => {
     RestaurantDataService.getAll()
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setRestaurants(response.data.restaurants);
       })
       .catch((e) => {
@@ -75,7 +75,7 @@ const RestaurantsList = (props) => {
   const retrieveCuisines = () => {
     RestaurantDataService.getCuisines()
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setCuisines(cuisines.concat(response.data));
       })
       .catch((e) => {
@@ -144,6 +144,7 @@ const RestaurantsList = (props) => {
       <br />
       <div className="row">
         {restaurants.map((restaurant) => {
+          // console.log(restaurant.restaurant_id);
           const address = `${restaurant.address.building} ${restaurant.address.street}, ${restaurant.address.zipcode}`;
           return (
             <div className="col-lg-4 pb-1">
@@ -159,7 +160,7 @@ const RestaurantsList = (props) => {
                   </p>
                   <div className="row">
                     <Link
-                      to={"/review/id/" + restaurant._id}
+                      to={`/review/id/${restaurant.restaurant_id}`}
                       className="btn btn-primary col-lg-5 mx-1 mb-1"
                     >
                       View Reviews

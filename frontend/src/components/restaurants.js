@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, useParams } from "react-router-dom";
 import RestaurantDataService from "../services/restaurant.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Restaurants = (props) => {
+  const { id } = useParams();
   const initialRestaurantState = {
     id: null,
     name: "",
@@ -18,12 +19,11 @@ const Restaurants = (props) => {
     getReviews();
   }, []);
 
-  const getReviews = (id) => {
-    console.log(id);
-    RestaurantDataService.getReviews(parseInt(40361606))
+  const getReviews = () => {
+    RestaurantDataService.getReviews(id)
       .then((response) => {
         setReviews(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -81,7 +81,7 @@ const Restaurants = (props) => {
                           <strong>Date: </strong> {review.date}
                         </p>
                         <div className="row">
-                          <button onClick={deleteReview(review._id)}>
+                          <button onClick={() => deleteReview(review._id)}>
                             Delete
                           </button>
                         </div>
