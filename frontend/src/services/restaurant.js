@@ -27,7 +27,7 @@ class RestaurantDataService {
     return http.delete(`/review?id=${id}`);
   }
 
-  getCuisines(id) {
+  getCuisines() {
     return http.get(`/cuisines`);
   }
 

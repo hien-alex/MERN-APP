@@ -6,7 +6,6 @@ import RestaurantDataService from "../services/restaurant.js";
 const AddReview = (props) => {
   const m = useLocation();
   const { id } = useParams();
-  let initialReviewState = "";
   const [submitted, setSubmitted] = useState(false);
   const [review, setReview] = useState("");
   const [name, setName] = useState("");
