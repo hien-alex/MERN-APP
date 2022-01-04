@@ -70,6 +70,8 @@ const Restaurants = (props) => {
           >
             Add Review
           </Link>
+          <br />
+          <br />
           <h4> Reviews </h4>
           <div className="row">
             {reviews.length > 0 ? (

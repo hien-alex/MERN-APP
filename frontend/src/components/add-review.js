@@ -7,20 +7,34 @@ const AddReview = (props) => {
   const m = useLocation();
   const { id } = useParams();
   let initialReviewState = "";
-  let submitted = false;
+  const [submitted, setSubmitted] = useState(false);
   const [review, setReview] = useState("");
+  const [name, setName] = useState("");
 
   const handleInputChange = (event) => {
     setReview(event.target.value);
   };
 
+  const handleNameInput = (event) => {
+    setName(event.target.value);
+  };
+
   const saveReview = () => {
     var data = {
       text: review,
-      name: "test",
+      name: name,
       user_id: "123",
       restaurant_id: id,
     };
+
+    RestaurantDataService.createReview(data)
+      .then((response) => {
+        console.log(response);
+        setSubmitted(true);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
@@ -33,19 +47,31 @@ const AddReview = (props) => {
         ) : (
           <div>
             <div className="form-group">
-              <label htmlFor="description">
-                Create Review for {m.state.name}
-              </label>
+              <h4>Create Review for {m.state.name}</h4>
+
+              <br />
+              <label>Comment:</label>
               <input
                 type="text"
                 className="form-control"
                 id="text"
-                reuired
+                required
                 value={review}
                 onChange={handleInputChange}
                 name="text"
               />
+              <br />
+              <label>Name:</label>
+              <input
+                type="textarea"
+                className="form-control"
+                required
+                value={name}
+                onChange={handleNameInput}
+                name="name"
+              ></input>
               <div>
+                <br />
                 <button onClick={saveReview} className="btn btn-success">
                   Submit
                 </button>

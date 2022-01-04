@@ -63,7 +63,7 @@ export default class reviewsDAO {
 
   static async getReviewsOfRestaurant(restaurantID) {
     let reviewsFound;
-    restaurantID = parseInt(restaurantID);
+    restaurantID = restaurantID;
     try {
       reviewsFound = await reviews.find({
         restaurant_id: { $eq: restaurantID },

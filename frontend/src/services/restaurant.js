@@ -14,6 +14,7 @@ class RestaurantDataService {
   }
 
   createReview(data) {
+    console.log(data.restaurant_id);
     return http.post("/review", data);
   }
 

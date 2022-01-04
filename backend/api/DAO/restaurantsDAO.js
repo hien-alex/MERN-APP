@@ -19,7 +19,7 @@ export default class RestaurantsDAO {
   static async getRestaurants({
     filter = null,
     page = 0,
-    restaurantsPerPage = 50,
+    restaurantsPerPage = 51,
   } = {}) {
     let query;
     if (filter) {

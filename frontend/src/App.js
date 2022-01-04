@@ -20,7 +20,7 @@ function App() {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a className="navbar-brand" href="#" style={{ marginLeft: "2vw" }}>
+        <a className="navbar-brand" href="/" style={{ marginLeft: "2vw" }}>
           MERN Restaurants Project
         </a>
         <button
