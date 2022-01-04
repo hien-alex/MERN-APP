@@ -17,6 +17,7 @@ const Restaurants = (props) => {
 
   useEffect(() => {
     getReviews();
+    getRestaurant();
   }, []);
 
   const getReviews = () => {
@@ -30,11 +31,12 @@ const Restaurants = (props) => {
       });
   };
 
-  const getRestaurant = (id) => {
+  const getRestaurant = () => {
+    console.log(id);
     RestaurantDataService.get(id)
       .then((response) => {
-        setRestaurant(response.data);
-        console.log(response.data);
+        setRestaurant(response.data[0]);
+        console.log(response.data[0]);
       })
       .catch((e) => {
         console.log(e);
@@ -45,6 +47,7 @@ const Restaurants = (props) => {
     RestaurantDataService.deleteReview(id)
       .then((response) => {
         console.log("Success!");
+        getReviews();
       })
       .catch((e) => {
         console.log(e);
