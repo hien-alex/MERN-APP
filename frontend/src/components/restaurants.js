@@ -32,11 +32,9 @@ const Restaurants = (props) => {
   };
 
   const getRestaurant = () => {
-    console.log(id);
     RestaurantDataService.get(id)
       .then((response) => {
         setRestaurant(response.data[0]);
-        console.log(response.data[0]);
       })
       .catch((e) => {
         console.log(e);
@@ -65,7 +63,11 @@ const Restaurants = (props) => {
             <strong>Address: </strong> {restaurant.address.building}{" "}
             {restaurant.address.street}, {restaurant.address.zipcode}
           </p>
-          <Link to={"/"} className="btn btn-primary">
+          <Link
+            to={`/reviewOf/${id}`}
+            state={{ name: restaurant.name }}
+            className="btn btn-primary"
+          >
             Add Review
           </Link>
           <h4> Reviews </h4>
