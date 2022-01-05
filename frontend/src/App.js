@@ -5,6 +5,7 @@ import AddReview from "./components/add-review.js";
 import Login from "./components/login.js";
 import RestaurantsList from "./components/restaurants-list.js";
 import Restaurants from "./components/restaurants.js";
+import UpdateReview from "./components/update-review.js";
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -44,7 +45,8 @@ function App() {
           <Route exact path={"/restaurants"} element={<RestaurantsList />} />
           <Route exact path={"/"} element={<RestaurantsList />} />
           <Route path="/reviewOf/:id" element={<AddReview />} />
-          <Route path="/login" element={<Login login={login} />} />
+          {/* <Route path="/login" element={<Login login={login} />} /> */}
+          <Route exact path="/reviewUpdate/:id" element={<UpdateReview />} />
         </Routes>
       </div>
     </div>

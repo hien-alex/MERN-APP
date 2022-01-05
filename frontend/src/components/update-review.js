@@ -3,7 +3,7 @@ import { useParams, useLocation, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RestaurantDataService from "../services/restaurant.js";
 
-const AddReview = (props) => {
+const UpdateReview = (props) => {
   const m = useLocation();
   const { id } = useParams();
   const [submitted, setSubmitted] = useState(false);
@@ -14,19 +14,15 @@ const AddReview = (props) => {
     setReview(event.target.value);
   };
 
-  const handleNameInput = (event) => {
-    setName(event.target.value);
-  };
-
   const saveReview = () => {
     var data = {
       text: review,
       name: name,
       user_id: "123",
-      restaurant_id: id,
+      review_id: id,
     };
 
-    RestaurantDataService.createReview(data)
+    RestaurantDataService.updateReview(data)
       .then((response) => {
         console.log(response);
         setSubmitted(true);
@@ -41,17 +37,20 @@ const AddReview = (props) => {
       <div>
         {submitted ? (
           <div>
-            <h4>You submitted successfully!</h4>
-            <Link className="btn btn-primary" to={`/review/id/${id}`}>
+            <h4>Updated successfully!</h4>
+            <Link
+              className="btn btn-primary"
+              to={`/review/id/${m.state.restaurant_id}`}
+            >
               Back to reviews
             </Link>
           </div>
         ) : (
           <div>
             <div className="form-group">
-              <h4>Create Review for {m.state.name}</h4>
+              <h4>Update Review for {m.state.name}</h4>
               <br />
-              <label>Comment:</label>
+              <label>New Comment:</label>
               <input
                 type="text"
                 className="form-control"
@@ -61,16 +60,7 @@ const AddReview = (props) => {
                 onChange={handleInputChange}
                 name="text"
               />
-              <br />
-              <label>Name:</label>
-              <input
-                type="textarea"
-                className="form-control"
-                required
-                value={name}
-                onChange={handleNameInput}
-                name="name"
-              ></input>
+
               <div>
                 <br />
                 <button onClick={saveReview} className="btn btn-success">
@@ -85,4 +75,4 @@ const AddReview = (props) => {
   );
 };
 
-export default AddReview;
+export default UpdateReview;

@@ -14,6 +14,7 @@ const Restaurants = (props) => {
 
   const [restaurant, setRestaurant] = useState(initialRestaurantState);
   const [reviews, setReviews] = useState([]);
+  const [update, setUpdate] = useState("");
 
   useEffect(() => {
     getReviews();
@@ -24,7 +25,7 @@ const Restaurants = (props) => {
     RestaurantDataService.getReviews(id)
       .then((response) => {
         setReviews(response.data);
-        // console.log(response.data);
+        console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -94,9 +95,13 @@ const Restaurants = (props) => {
                           >
                             Delete
                           </button>
-                          <button className="btn btn-primary col-sm mx-1 mb-1">
+                          <Link
+                            to={`/reviewUpdate/${review._id}`}
+                            state={{ name: restaurant.name, restaurant_id: id }}
+                            className="btn btn-primary col-sm mx-1 mb-1"
+                          >
                             Update
-                          </button>
+                          </Link>
                         </div>
                       </div>
                     </div>
