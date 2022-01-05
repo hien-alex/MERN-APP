@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AddReview from "./components/add-review.js";
-import Login from "./components/login.js";
+
 import RestaurantsList from "./components/restaurants-list.js";
 import Restaurants from "./components/restaurants.js";
 import UpdateReview from "./components/update-review.js";
@@ -10,19 +10,11 @@ import UpdateReview from "./components/update-review.js";
 function App() {
   const [user, setUser] = React.useState(null);
 
-  async function login(user = null) {
-    setUser = user;
-  }
-
-  async function logout() {
-    setUser(null);
-  }
-
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <a className="navbar-brand" href="/" style={{ marginLeft: "2vw" }}>
-          MERN Restaurants Project
+          Restaurant Reviews Project
         </a>
         <button
           class="navbar-toggler"

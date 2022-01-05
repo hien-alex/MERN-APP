@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import RestaurantDataService from "../services/restaurant.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 
