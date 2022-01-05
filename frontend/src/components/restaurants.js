@@ -88,8 +88,14 @@ const Restaurants = (props) => {
                           <strong>Date: </strong> {review.date}
                         </p>
                         <div className="row">
-                          <button onClick={() => deleteReview(review._id)}>
+                          <button
+                            className="btn btn-primary col-sm mx-1 mb-1"
+                            onClick={() => deleteReview(review._id)}
+                          >
                             Delete
+                          </button>
+                          <button className="btn btn-primary col-sm mx-1 mb-1">
+                            Update
                           </button>
                         </div>
                       </div>

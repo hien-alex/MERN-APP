@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RestaurantDataService from "../services/restaurant.js";
 
@@ -42,6 +42,9 @@ const AddReview = (props) => {
         {submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
+            <Link className="btn btn-primary" to={`/review/id/${id}`}>
+              Back to reviews
+            </Link>
           </div>
         ) : (
           <div>
