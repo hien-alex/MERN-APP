@@ -9,6 +9,11 @@ import UpdateReview from "./components/update-review.js";
 
 function App() {
   const [user, setUser] = React.useState(null);
+  const [currentPage, setCurrentPage] = React.useState(2);
+
+  const updatePage = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
   return (
     <div>
@@ -35,12 +40,37 @@ function App() {
         <Routes>
           <Route path="/review/id/:id" element={<Restaurants />} />
           <Route exact path={"/restaurants"} element={<RestaurantsList />} />
+          <Route
+            path={`/restaurants/?page=${currentPage}`}
+            element={<RestaurantsList />}
+          />
           <Route exact path={"/"} element={<RestaurantsList />} />
           <Route path="/reviewOf/:id" element={<AddReview />} />
-          {/* <Route path="/login" element={<Login login={login} />} /> */}
+
           <Route exact path="/reviewUpdate/:id" element={<UpdateReview />} />
         </Routes>
       </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item disabled">
+            <a class="page-link" href="/">
+              Previous
+            </a>
+          </li>
+
+          <li class="page-item">
+            <Link
+              class="page-link"
+              onClick={() => {
+                setCurrentPage(currentPage + 1);
+              }}
+              to={`/restaurants/?page=${currentPage}`}
+            >
+              Next
+            </Link>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }

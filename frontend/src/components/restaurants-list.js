@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RestaurantDataService from "../services/restaurant";
 
@@ -9,11 +9,18 @@ const RestaurantsList = (props) => {
   const [searchZip, setSearchZip] = useState("");
   const [searchCuisine, setSearchCuisine] = useState("");
   const [cuisines, setCuisines] = useState(["All Cuisines"]);
+  let search = window.location.search;
+  let params = new URLSearchParams(search);
+  let page = params.get("page") ? params.get("page") - 1 : 0;
 
   useEffect(() => {
     retrieveRestaurants();
     retrieveCuisines();
   }, []);
+
+  useEffect(() => {
+    retrieveRestaurants();
+  }, [page]);
 
   const onChangeSearchName = (e) => {
     const searchName = e.target.value;
@@ -62,7 +69,7 @@ const RestaurantsList = (props) => {
   };
 
   const retrieveRestaurants = () => {
-    RestaurantDataService.getAll()
+    RestaurantDataService.getAll(page ? page : 0)
       .then((response) => {
         // console.log(response.data);
         setRestaurants(response.data.restaurants);
