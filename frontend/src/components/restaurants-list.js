@@ -89,6 +89,7 @@ const RestaurantsList = (props) => {
         console.log(e);
       });
   };
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   return (
     <div>
@@ -186,6 +187,35 @@ const RestaurantsList = (props) => {
           );
         })}
       </div>
+      <br />
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class={`page-item ${currentPage == 1 ? "disabled" : ""}`}>
+            <Link
+              class="page-link"
+              onClick={() => {
+                setCurrentPage(currentPage - 1);
+              }}
+              to={`/restaurants/?page=${currentPage - 1}`}
+            >
+              Previous
+            </Link>
+          </li>
+
+          <li class="page-item">
+            <Link
+              class="page-link"
+              onClick={() => {
+                setCurrentPage(currentPage + 1);
+              }}
+              to={`/restaurants/?page=${currentPage + 1}`}
+            >
+              Next
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <br />
     </div>
   );
 };
