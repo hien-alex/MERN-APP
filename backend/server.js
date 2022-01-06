@@ -7,6 +7,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/v1/restaurants", restaurants);
-app.use("*", (req, res) => res.status(404).end(`ERROR 404`));
+app.use("*", (req, res) => res.status(404).end(`ERROR 401`));
 
 export default app;
