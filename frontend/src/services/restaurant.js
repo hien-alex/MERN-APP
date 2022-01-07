@@ -34,6 +34,10 @@ class RestaurantDataService {
   getReviews(id) {
     return http.get(`/review/id/${id}`);
   }
+
+  getAllRestaurants() {
+    return http.get("/getAll");
+  }
 }
 
 export default new RestaurantDataService();

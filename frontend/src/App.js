@@ -1,15 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AddReview from "./components/add-review.js";
-
+import RestaurantDataService from "../src/services/restaurant.js";
 import RestaurantsList from "./components/restaurants-list.js";
 import Restaurants from "./components/restaurants.js";
 import UpdateReview from "./components/update-review.js";
 
-function App() {
+const App = (props) => {
   const [user, setUser] = React.useState(null);
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [allRestaurants, setAllRestaurants] = React.useState([]);
+
+  const retrieveAllRestaurants = () => {
+    RestaurantDataService.getAllRestaurants()
+      .then((response) => {
+        // console.log(response.data[0].name.toLowerCase().includes("reg"));
+        // let filteredData = response.data.filter((x) =>
+        //   x.name.toLowerCase().includes("regina")
+        // );
+
+        // console.log(filteredData);
+        console.log(response.data);
+        setAllRestaurants([response.data]);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  useEffect(() => {
+    retrieveAllRestaurants();
+  }, []);
 
   return (
     <div>
@@ -48,6 +69,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;

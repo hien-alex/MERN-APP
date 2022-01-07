@@ -54,4 +54,18 @@ export default class RestaurantsController {
       res.status(500).json({ error: e });
     }
   }
+
+  static async apiGetAllRestaurants(req, res) {
+    try {
+      let allRestaurants = await RestaurantsDAO.getAllRestaurants();
+      if (!allRestaurants) {
+        res.status(401).json({ error: "Unable to retrieve all restaurants!" });
+        return;
+      }
+      res.json(allRestaurants);
+    } catch (e) {
+      console.log(`api, ${e}`);
+      res.status(500).json({ error: e });
+    }
+  }
 }

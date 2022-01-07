@@ -98,4 +98,15 @@ export default class RestaurantsDAO {
       return { restaurant: "" };
     }
   }
+
+  static async getAllRestaurants() {
+    let allRestaurants;
+    try {
+      allRestaurants = await restaurants.find().toArray();
+      return allRestaurants;
+    } catch (e) {
+      console.error(`Cannot retrieve all restaurants ${e}`);
+      return { allRestaurants: "" };
+    }
+  }
 }

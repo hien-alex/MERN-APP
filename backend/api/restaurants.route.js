@@ -10,6 +10,7 @@ router
   .route("/review/id/:id")
   .get(ReviewsController.apiGetReviewsByRestaurantID);
 router.route("/id/:id").get(RestaurantsController.apiGetRestaurantWithID);
+router.route("/getAll").get(RestaurantsController.apiGetAllRestaurants);
 
 router
   .route("/review")
