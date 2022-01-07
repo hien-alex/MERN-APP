@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RestaurantDataService from "../services/restaurant";
 
 const RestaurantsList = (props) => {
+  const allRestaurants = props.allRestaurants;
   const [restaurants, setRestaurants] = useState([]);
   const [searchName, setSearchName] = useState("");
   const [searchZip, setSearchZip] = useState("");
   const [searchCuisine, setSearchCuisine] = useState("");
   const [cuisines, setCuisines] = useState(["All Cuisines"]);
-  const [allRestaurants, setAllRestaurants] = useState([]);
+  const [searched, setSearched] = useState(false);
+  // const [allRestaurants, setAllRestaurants] = useState([]);
   let search = window.location.search;
   let params = new URLSearchParams(search);
   let page = params.get("page") ? params.get("page") - 1 : 0;
@@ -43,19 +45,23 @@ const RestaurantsList = (props) => {
   };
 
   const find = (query, by) => {
-    // let filteredData = allRestaurants[0].filter((x) =>
-    //   x.name.toLowerCase().includes("riviera")
-    // );
-    // console.log(filteredData);
-    // setRestaurants(filteredData);
-    RestaurantDataService.find(query, by)
-      .then((response) => {
-        // console.log(response.data);
-        setRestaurants(response.data.restaurants);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    setSearched(true);
+    if (by === "name") {
+      setRestaurants(
+        allRestaurants[0].filter((x) =>
+          x.name.toLowerCase().includes(query.toLowerCase())
+        )
+      );
+    } else {
+      RestaurantDataService.find(query, by)
+        .then((response) => {
+          console.log(response.data);
+          setRestaurants(response.data.restaurants);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
 
   const findByName = () => {
@@ -106,7 +112,8 @@ const RestaurantsList = (props) => {
           <input
             type="text"
             className="form-control"
-            placeholder="Search by Name"
+            disabled={props.disabled}
+            placeholder={props.disabled ? "Loading..." : "Search by Name"}
             value={searchName}
             onChange={onChangeSearchName}
           />
@@ -124,7 +131,8 @@ const RestaurantsList = (props) => {
           <input
             type="text"
             className="form-control"
-            placeholder="Search by Zipcode"
+            disabled={props.disabled}
+            placeholder={props.disabled ? "Loading..." : "Search by Zipcode"}
             value={searchZip}
             onChange={onChangeSearchZip}
           />
@@ -139,7 +147,11 @@ const RestaurantsList = (props) => {
           </div>
         </div>
         <div className="input-group col-sm">
-          <select className="form-control" onChange={onChangeSearchCuisine}>
+          <select
+            disabled={props.disabled}
+            className="form-control"
+            onChange={onChangeSearchCuisine}
+          >
             {cuisines.map((cuisine) => {
               return (
                 <option value={cuisine}>{cuisine.substring(0, 20)}</option>
@@ -196,33 +208,37 @@ const RestaurantsList = (props) => {
         })}
       </div>
       <br />
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-          <li class={`page-item ${currentPage == 1 ? "disabled" : ""}`}>
-            <Link
-              class="page-link"
-              onClick={() => {
-                setCurrentPage(currentPage - 1);
-              }}
-              to={`/restaurants/?page=${currentPage - 1}`}
-            >
-              Previous
-            </Link>
-          </li>
+      {searched ? (
+        ""
+      ) : (
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class={`page-item ${currentPage == 1 ? "disabled" : ""}`}>
+              <Link
+                class="page-link"
+                onClick={() => {
+                  setCurrentPage(currentPage - 1);
+                }}
+                to={`/restaurants/?page=${currentPage - 1}`}
+              >
+                Previous
+              </Link>
+            </li>
 
-          <li class="page-item">
-            <Link
-              class="page-link"
-              onClick={() => {
-                setCurrentPage(currentPage + 1);
-              }}
-              to={`/restaurants/?page=${currentPage + 1}`}
-            >
-              Next
-            </Link>
-          </li>
-        </ul>
-      </nav>
+            <li class="page-item">
+              <Link
+                class="page-link"
+                onClick={() => {
+                  setCurrentPage(currentPage + 1);
+                }}
+                to={`/restaurants/?page=${currentPage + 1}`}
+              >
+                Next
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      )}
       <br />
     </div>
   );

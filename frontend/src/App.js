@@ -11,18 +11,14 @@ const App = (props) => {
   const [user, setUser] = React.useState(null);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [allRestaurants, setAllRestaurants] = React.useState([]);
+  const [disabled, setDisabled] = React.useState(true);
 
   const retrieveAllRestaurants = () => {
     RestaurantDataService.getAllRestaurants()
       .then((response) => {
-        // console.log(response.data[0].name.toLowerCase().includes("reg"));
-        // let filteredData = response.data.filter((x) =>
-        //   x.name.toLowerCase().includes("regina")
-        // );
-
-        // console.log(filteredData);
-        console.log(response.data);
+        // console.log(response.data);
         setAllRestaurants([response.data]);
+        setDisabled(false);
       })
       .catch((e) => {
         console.log(e);
@@ -30,6 +26,7 @@ const App = (props) => {
   };
   useEffect(() => {
     retrieveAllRestaurants();
+    setDisabled(true);
   }, []);
 
   return (
@@ -56,12 +53,35 @@ const App = (props) => {
       <div className="container mt-3">
         <Routes>
           <Route path="/review/id/:id" element={<Restaurants />} />
-          <Route exact path={"/restaurants"} element={<RestaurantsList />} />
+          <Route
+            exact
+            path={"/restaurants"}
+            element={
+              <RestaurantsList
+                allRestaurants={allRestaurants}
+                disabled={disabled}
+              />
+            }
+          />
           <Route
             path={`/restaurants/?page=${currentPage}`}
-            element={<RestaurantsList />}
+            element={
+              <RestaurantsList
+                allRestaurants={allRestaurants}
+                disabled={disabled}
+              />
+            }
           />
-          <Route exact path={"/"} element={<RestaurantsList />} />
+          <Route
+            exact
+            path={"/"}
+            element={
+              <RestaurantsList
+                allRestaurants={allRestaurants}
+                disabled={disabled}
+              />
+            }
+          />
           <Route path="/reviewOf/:id" element={<AddReview />} />
 
           <Route exact path="/reviewUpdate/:id" element={<UpdateReview />} />
